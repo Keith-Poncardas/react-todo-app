@@ -1,0 +1,28 @@
+/* 
+ * Sets a maximum width of 700px for elements with the .custom-container-width class,
+ * helping to constrain content layout for better readability and design consistency.
+ */
+.custom-container-width {
+    max-width: 700px;
+}
+
+/* 
+    .custom-input-group
+    --------------------
+    Positions the input group to the right by setting 'right' to 0 and 'left' to 'auto'.
+    Useful for aligning input elements to the right side of their container.
+*/
+.custom-input-group {
+  right: 0; 
+  left: auto;
+}
+
+.custom-modal {
+    background: rgba(0,0,0,0.5);
+}
+
+.custom-floating-btn {
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 1050;
+}
