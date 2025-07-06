@@ -41,14 +41,14 @@ export default function InputWithDropdown({ links = [], setSearch }) {
         <div className="input-group mb-3">
 
             <Input
-                className="form-control"
+                className="form-control shadow-sm rounded-start-3"
                 aria-label="Search todo input"
                 placeholder="Search"
                 onChange={(e) => handleInput(e)}
             />
 
             <Button
-                className="btn btn-primary dropdown-toggle"
+                className="btn btn-primary dropdown-toggle rounded-end-3"
                 type="button"
                 data-mdb-dropdown-init
                 data-mdb-ripple-init

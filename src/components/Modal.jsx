@@ -95,8 +95,8 @@ export default function Modal({ setIsOpen, createNewTodo }) {
                                     Todo Description
                                 </label>
                                 <div>
-                                    <Input className="form-control form-control-lg border-0  rounded-3"
-                                        placeholder="What needs to be done?" ref={inputRef} />
+                                    <Input className="form-control form-control-lg border-0 rounded-3"
+                                        placeholder="What needs to be done?" ref={inputRef} autoFocus />
 
                                     <div id="todoInputHelp" className="form-text">
                                         Describe your task in detail to stay organized

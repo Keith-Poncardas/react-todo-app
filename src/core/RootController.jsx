@@ -14,6 +14,7 @@ import useToggleState from "../hooks/useToggleState";
 import TodoHeader from "../components/TodoHeader";
 import ListCard from "../components/ListCard";
 import { useState } from "react";
+import fallBackImg from "../assets/empty.svg"
 
 /**
  * Generates a unique identifier string using the current timestamp and a random component.
@@ -53,7 +54,7 @@ export default function RootController() {
     function createNewTodo(task, priority) {
         toast.success('Task added');
         const UID = generateUniqueID();
-        setTodos((prev) => ([...prev, { id: UID, task: task, priority: priority, isCompleted: false }]));
+        setTodos((prev) => ([{ id: UID, task: task, priority: priority, isCompleted: false }, ...prev]));
     }
 
     /**
@@ -102,18 +103,35 @@ export default function RootController() {
             <TodoHeader title="Todos" count={todos.length} />
 
             <div className="my-3">
-                {sortedTodos.map((todo) => (
-                    <ListCard
-                        key={todo.id}
-                        id={todo.id}
-                        task={todo.task}
-                        isMarkedComplete={todo.isCompleted}
-                        priority={todo.priority}
-                        deleteTodo={deleteTodo}
-                        editTodo={editTodo}
-                        isCompleted={isCompleted}
-                    />
-                ))}
+
+                {sortedTodos.length !== 0 ? (
+                    sortedTodos.map((todo) => (
+                        <ListCard
+                            key={todo.id}
+                            id={todo.id}
+                            task={todo.task}
+                            isMarkedComplete={todo.isCompleted}
+                            priority={todo.priority}
+                            deleteTodo={deleteTodo}
+                            editTodo={editTodo}
+                            isCompleted={isCompleted}
+                        />
+                    ))
+                ) : (
+                    <div className="card text-center bg-transparent shadow-0 mt-4 p-4">
+                        <div className="card-body">
+                            <img
+                                src={fallBackImg}
+                                alt="No tasks"
+                                style={{ width: '120px', marginBottom: '1rem' }}
+                            />
+                            <h5 className="text-muted mb-2">You have no list</h5>
+                            <p className="text-muted small">Add a task to get started!</p>
+                        </div>
+                    </div>
+                )}
+
+
             </div>
 
             {isModalOpen && (<Modal setIsOpen={setIsModalOpen} createNewTodo={createNewTodo} />)}
