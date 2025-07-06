@@ -16,6 +16,7 @@ import ListCard from "../components/ListCard";
 import { useState } from "react";
 import fallBackImg from "../assets/empty.svg"
 import Alert from "../components/Alert";
+import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * Generates a unique identifier string using the current timestamp and a random component.
@@ -99,7 +100,7 @@ export default function RootController() {
             {isAlertOpen && (
                 <Alert
                     emphasizeMsg="New Update!"
-                    message="Improved list card layout and added a fallback image for empty states."
+                    message="Smooth framer motion added"
                     Icon={() => (<i className="fas fa-check-circle me-3 mt-1 fs-5"></i>)}
                     setIsAlertOpen={() => setIsAlertOpen(false)}
                 />
@@ -115,35 +116,44 @@ export default function RootController() {
             <TodoHeader title="Todos" count={todos.length} />
 
             <div className="my-3">
-
                 {sortedTodos.length !== 0 ? (
-                    sortedTodos.map((todo) => (
-                        <ListCard
-                            key={todo.id}
-                            id={todo.id}
-                            task={todo.task}
-                            isMarkedComplete={todo.isCompleted}
-                            priority={todo.priority}
-                            deleteTodo={deleteTodo}
-                            editTodo={editTodo}
-                            isCompleted={isCompleted}
-                        />
-                    ))
+                    <AnimatePresence>
+                        {sortedTodos.map((todo) => (
+                            <motion.div
+                                key={todo.id}
+                                layout // enables automatic smooth animation on reorder
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 10 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            >
+                                <ListCard
+                                    id={todo.id}
+                                    task={todo.task}
+                                    isMarkedComplete={todo.isCompleted}
+                                    priority={todo.priority}
+                                    deleteTodo={deleteTodo}
+                                    editTodo={editTodo}
+                                    isCompleted={isCompleted}
+                                />
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
                 ) : (
                     <div className="card text-center bg-transparent shadow-0 mt-4 p-4">
                         <div className="card-body">
                             <img
                                 src={fallBackImg}
                                 alt="No tasks"
-                                style={{ width: '120px', marginBottom: '1rem' }}
+                                style={{ width: "120px", marginBottom: "1rem" }}
                             />
                             <h5 className="text-muted mb-2">You have no list</h5>
                             <p className="text-muted small">Add a task to get started!</p>
                         </div>
                     </div>
                 )}
-
             </div>
+
 
             {isModalOpen && (<Modal setIsOpen={setIsModalOpen} createNewTodo={createNewTodo} />)}
 
