@@ -15,6 +15,7 @@ import TodoHeader from "../components/TodoHeader";
 import ListCard from "../components/ListCard";
 import { useState } from "react";
 import fallBackImg from "../assets/empty.svg"
+import Alert from "../components/Alert";
 
 /**
  * Generates a unique identifier string using the current timestamp and a random component.
@@ -28,6 +29,8 @@ function generateUniqueID() {
 
 export default function RootController() {
     const [isModalOpen, setIsModalOpen] = useToggleState();
+    const [isAlertOpen, setIsAlertOpen] = useToggleState(true);
+
     const [todos, setTodos] = useLocalStorage('todos', []);
     const [search, setSearch] = useState('');
 
@@ -93,6 +96,15 @@ export default function RootController() {
     return (
         <Container className="container mt-3 custom-container-width">
 
+            {isAlertOpen && (
+                <Alert
+                    emphasizeMsg="New Update!"
+                    message="Improved list card layout and added a fallback image for empty states."
+                    Icon={() => (<i className="fas fa-check-circle me-3 mt-1 fs-5"></i>)}
+                    setIsAlertOpen={() => setIsAlertOpen(false)}
+                />
+            )}
+
             <Toaster />
 
             <Button className="btn btn-primary btn-floating btn-lg position-fixed custom-floating-btn" onClick={setIsModalOpen}>
@@ -130,7 +142,6 @@ export default function RootController() {
                         </div>
                     </div>
                 )}
-
 
             </div>
 
