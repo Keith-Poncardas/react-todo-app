@@ -15,8 +15,10 @@ import TodoHeader from "../components/TodoHeader";
 import ListCard from "../components/ListCard";
 import { useState } from "react";
 import fallBackImg from "../assets/empty.svg"
+import fallBackImgSearch from "../assets/search.svg"
 import Alert from "../components/Alert";
 import { motion, AnimatePresence } from "framer-motion";
+import Fallback from "../components/Fallback";
 
 /**
  * Generates a unique identifier string using the current timestamp and a random component.
@@ -140,17 +142,27 @@ export default function RootController() {
                         ))}
                     </AnimatePresence>
                 ) : (
-                    <div className="card text-center bg-transparent shadow-0 mt-4 p-4">
-                        <div className="card-body">
-                            <img
-                                src={fallBackImg}
-                                alt="No tasks"
-                                style={{ width: "120px", marginBottom: "1rem" }}
+
+                    <>
+                        {/* If user searched but nothing matched */}
+                        {search && filteredTodos.length === 0 && (
+                            <Fallback
+                                image={fallBackImgSearch}
+                                headTxt="No results found"
+                                message={`No tasks match "${search}"`}
                             />
-                            <h5 className="text-muted mb-2">You have no list</h5>
-                            <p className="text-muted small">Add a task to get started!</p>
-                        </div>
-                    </div>
+                        )}
+
+                        {/* If there are no tasks at all (empty list) */}
+                        {!todos.length && !search && (
+                            <Fallback
+                                image={fallBackImg}
+                                headTxt="You have no list"
+                                message="Add a task to get started!"
+                            />
+                        )}
+
+                    </>
                 )}
             </div>
 
