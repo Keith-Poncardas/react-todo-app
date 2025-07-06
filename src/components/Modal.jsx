@@ -64,7 +64,7 @@ export default function Modal({ setIsOpen, createNewTodo }) {
 
     return (
         <div className="modal fade show d-block custom-modal" tabIndex="-1" aria-modal="true" role="dialog" aria-labelledby="addTodoModalLabel">
-            <div className="modal-dialog modal-dialog-centered modal-md">
+            <div className="modal-dialog modal-md">
                 <form className="modal-content shadow-lg" onSubmit={handleSubmit}>
                     {/* Modal Header */}
                     <div className="modal-header bg-primary text-white">
